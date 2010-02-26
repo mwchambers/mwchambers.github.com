@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>Clicker</title>
+
+	<script type="text/javascript">
+		function proc_click()
+		{ 
+			var dt = new Date();
+
+			if ( typeof proc_click.clicks == "undefined" ) { 
+				proc_click.clicks = 0;
+			   proc_click.start_time = dt.getTime();
+			}
+			++proc_click.clicks;
+
+			var now = dt.getTime();
+		   var elapsed = now - proc_click.start_time;
+			var display_div = document.getElementById("display");
+			var ten_seconds = 10000;
+
+			if ( elapsed >= ten_seconds ) {
+				var cpm = proc_click.clicks * 6;
+				var cps = proc_click.clicks / 10;
+				var res = "<ul>";
+				res += "<li> Total clicks: " + proc_click.clicks + " </li>";
+				res += "<li> Clicks per minute:  " + cpm + " </li>";
+				res += "<li> Clicks per second: " + cps + " </li>";
+				res += "</ul>";
+				display_div.innerHTML = res;
+				
+				document.getElementById("clicky").innerHTML="<p> Results: </p>";
+			} else { 
+				display_div.innerHTML = "<p> " + proc_click.clicks + " clicks. </p>";
+			}
+		}
+  </script> 
+</head>
+<body>
+
+	<h1> Clicker </h1>
+	<form id="clicky" name="clicky" action="" method="get">
+		<input type="button" name="button" Value="Click" onClick="proc_click()">
+	</form> 
+	<div id="display"> <p> Click the button as many times in 10 seconds.</p> </div>
+
+	<p> Also: python GTK version <a href="http://gist.github.com/315283"> here </a> </p>
+</body>
+</html>
